@@ -11,10 +11,12 @@ import UIKit
 class ViewController: UIViewController {
 
     var images = [UIImageView]()
+    //setting constants for max and min pages, variable for current page
     let MAX_PAGE = 2
     let MIN_PAGE = 0
     var currentPage = 0
     
+    //need a reference to the scrollview
     @IBOutlet weak var scrollView: UIScrollView!
 
     //loading happens first
@@ -44,13 +46,16 @@ class ViewController: UIViewController {
             imageView.frame = CGRect(x: newX - 75, y: (scrollView.frame.size.height / 2) - 75, width: 150, height: 150)
         }
         //adjusting the contentSize property of the scroll view. Since its a horizontal list we adjust the width, but not the height
+        //prevents content in the view from cliping to bounds of view
         scrollView.clipsToBounds = false
         scrollView.contentSize = CGSize(width: contentWidth, height: view.frame.size.height)
     }
     
-
+    
+    //listener is on both swipe gestures
     @IBAction func detectSwipe(_ sender: UISwipeGestureRecognizer) {
-
+        //sender has a direction property of UISwipeGestureRecognizerDirection.left or UISwipeGestureRecognizerDirection.right
+        //if we arent on the last page and are swiping to the left, run moveScrollView func
         if (currentPage < MAX_PAGE && sender.direction == UISwipeGestureRecognizerDirection.left) {
             moveScrollView(direction: 1)
             
@@ -62,12 +67,16 @@ class ViewController: UIViewController {
     }
     
     func moveScrollView(direction: Int){
+        //current page is itself + direction
         currentPage = currentPage + direction
+        //point is the far most right point
         let point: CGPoint = CGPoint(x: scrollView.frame.size.width * CGFloat(currentPage), y: 0.0)
+        //moves the scrollview
         scrollView.setContentOffset(point, animated: true)
         
         // Create a animation to increase the actual icon on screen
         UIView.animate(withDuration: 0.4){
+            //the new current image grows larger
             self.images[self.currentPage].transform = CGAffineTransform.init(scaleX: 1.4, y: 1.4)
             
             // Revert icon size of the non-active pages
