@@ -11,13 +11,15 @@ import UIKit
 class ViewController: UIViewController {
 
     var images = [UIImageView]()
+    let MAX_PAGE = 2
+    let MIN_PAGE = 0
+    var currentPage = 0
     
     @IBOutlet weak var scrollView: UIScrollView!
-    
+
     //loading happens first
     override func viewDidLoad() {
         super.viewDidLoad()
-       
     }
     
     //view did appear is more like document.ready
@@ -42,8 +44,41 @@ class ViewController: UIViewController {
             imageView.frame = CGRect(x: newX - 75, y: (scrollView.frame.size.height / 2) - 75, width: 150, height: 150)
         }
         //adjusting the contentSize property of the scroll view. Since its a horizontal list we adjust the width, but not the height
+        scrollView.clipsToBounds = false
         scrollView.contentSize = CGSize(width: contentWidth, height: view.frame.size.height)
     }
+    
+
+    @IBAction func detectSwipe(_ sender: UISwipeGestureRecognizer) {
+
+        if (currentPage < MAX_PAGE && sender.direction == UISwipeGestureRecognizerDirection.left) {
+            moveScrollView(direction: 1)
+            
+        }
+        
+        if (currentPage > MIN_PAGE && sender.direction == UISwipeGestureRecognizerDirection.right) {
+            moveScrollView(direction: -1)
+        }
+    }
+    
+    func moveScrollView(direction: Int){
+        currentPage = currentPage + direction
+        let point: CGPoint = CGPoint(x: scrollView.frame.size.width * CGFloat(currentPage), y: 0.0)
+        scrollView.setContentOffset(point, animated: true)
+        
+        // Create a animation to increase the actual icon on screen
+        UIView.animate(withDuration: 0.4){
+            self.images[self.currentPage].transform = CGAffineTransform.init(scaleX: 1.4, y: 1.4)
+            
+            // Revert icon size of the non-active pages
+            for x in 0..<self.images.count {
+                if (x != self.currentPage) {
+                    self.images[x].transform = CGAffineTransform.identity
+                }
+            }
+        }
+    }
+
 
 
 }

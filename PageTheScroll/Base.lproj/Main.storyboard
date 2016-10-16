@@ -19,7 +19,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sky" translatesAutoresizingMaskIntoConstraints="NO" id="QFV-Sa-ofd"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sky" translatesAutoresizingMaskIntoConstraints="NO" id="QFV-Sa-ofd">
+                                <gestureRecognizers/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sun" translatesAutoresizingMaskIntoConstraints="NO" id="HP6-7c-blf">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="140" id="5LC-0B-dBX"/>
@@ -31,13 +33,14 @@
                                     <constraint firstAttribute="height" constant="195" id="fs3-js-4Se"/>
                                 </constraints>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TR7-ic-E3f">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TR7-ic-E3f">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="260" id="p7P-QS-OhO"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="TR7-ic-E3f" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ctc-Ov-qnT"/>
                             <constraint firstItem="QFV-Sa-ofd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="DJh-Rf-SkY"/>
@@ -54,12 +57,26 @@
                             <constraint firstItem="TR7-ic-E3f" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oqe-f7-gCC"/>
                             <constraint firstItem="QFV-Sa-ofd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="wkc-Gf-yFV"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="j6O-th-yKx" appends="YES" id="wDR-rw-CQu"/>
+                            <outletCollection property="gestureRecognizers" destination="TA6-Ll-MK0" appends="YES" id="Khb-Ux-Yd4"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="scrollView" destination="TR7-ic-E3f" id="pBt-oh-uHy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="j6O-th-yKx">
+                    <connections>
+                        <action selector="detectSwipe:" destination="BYZ-38-t0r" id="92Q-0Q-1UF"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="TA6-Ll-MK0">
+                    <connections>
+                        <action selector="detectSwipe:" destination="BYZ-38-t0r" id="T7A-ZN-oyw"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="57.121439280359823"/>
         </scene>
